@@ -1,0 +1,46 @@
+add_library(WCH_Lib INTERFACE)
+target_include_directories(WCH_Lib INTERFACE 
+    ${CMAKE_SOURCE_DIR}/config
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS
+    ${CMAKE_CURRENT_LIST_DIR}/Debug
+    ${CMAKE_CURRENT_LIST_DIR}/StdPeriphDriver/inc;
+
+)
+
+file( GLOB CMSIS_SRC  CMSIS/*.c )
+file( GLOB DEBUG_SRC  Debug/*.c )
+file( GLOB DEVICE_SRC StdPeriphDriver/src/*.c )
+# file(GLOB_RECURSE CMSIS_SRC  RELATIVE ${CMAKE_CURRENT_LIST_DIR} "CMSIS/*.c")
+# file(GLOB_RECURSE DEBUG_SRC  RELATIVE ${CMAKE_CURRENT_LIST_DIR} "Debug/*.c")
+# file(GLOB_RECURSE DEVICE_SRC RELATIVE ${CMAKE_CURRENT_LIST_DIR} "StdPeriphDriver/src/*.c")
+
+SET(SRC_LIST 
+    ${CMSIS_SRC}
+    ${DEBUG_SRC}
+    ${DEVICE_SRC}
+    ${CMAKE_CURRENT_LIST_DIR}/Startup/startup_ch32f20x_D8W.c
+    ${CMAKE_CURRENT_LIST_DIR}/_soc_libc.c
+)
+
+# message("WCH_Lib:SRC_LIST ${SRC_LIST}")
+
+target_sources(WCH_Lib INTERFACE
+    ${SRC_LIST}
+)
+
+
+
+add_library(WCH_BLE INTERFACE)
+target_sources(WCH_BLE INTERFACE
+    ${CMAKE_CURRENT_LIST_DIR}/BLE/HAL/KEY.c
+    ${CMAKE_CURRENT_LIST_DIR}/BLE/HAL/LED.c
+    ${CMAKE_CURRENT_LIST_DIR}/BLE/HAL/MCU.c
+    ${CMAKE_CURRENT_LIST_DIR}/BLE/HAL/RTC.c
+    ${CMAKE_CURRENT_LIST_DIR}/BLE/HAL/SLEEP.c
+)
+
+target_include_directories(WCH_BLE INTERFACE 
+    ${CMAKE_SOURCE_DIR}/config
+    ${CMAKE_CURRENT_LIST_DIR}/BLE/HAL/include
+    ${CMAKE_CURRENT_LIST_DIR}/BLE/LIB
+)
