@@ -51,9 +51,12 @@ __attribute__((weak)) int fstat(int fd, struct stat *st)
     errno = EBADF;
     return 0;
 }
-*/
-
+__attribute__((weak)) int _read(int file, char *ptr, int len){
+    return -1;    
+}
 __attribute__((weak))  int _kill(int pid){
+    return -1;
+}__attribute__((weak))  int _kill(int pid){
     return -1;
 }
 __attribute__((weak))  int _isatty(int pid){
@@ -78,5 +81,5 @@ __attribute__((weak)) int _lseek(int fd, int ptr, int dir)
     errno = EBADF;
     return -1;
 }
-
+*/
 

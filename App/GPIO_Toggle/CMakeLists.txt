@@ -1,10 +1,9 @@
 
 cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME curr_dir)   
 
-SET(APP_NAME ${curr_dir})
+SET(APP_NAME arm_gpio)
 file( GLOB SRC_LIST *.c )
 
-message("Dir: ${curr_dir}(${CMAKE_CURRENT_SOURCE_DIR})  Source list: ${SRC_LIST}")
 
 add_executable(${APP_NAME} ${SRC_LIST})
 add_map_output(${APP_NAME})

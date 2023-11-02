@@ -1,51 +1,35 @@
 cmake_minimum_required(VERSION 3.5)
 
-SET(TARGET_PROCESSOR m3)
+# TARGET_PROCESSOR >m0,m0plus,m4,m4f,m33,m7,m0plus,riscv32
 
-SET(APP_NAME chf208_soc)
+SET(TARGET_PROCESSOR riscv32)
 
 
 
 include(cmake/util.cmake)
-include(cmake/toolchain/toolchain-arm.cmake)
+include(cmake/toolchain/toolchain.cmake)
 
-project(${APP_NAME} C ASM)
+
+project(WCH32 C ASM)
+
+
+if(TARGET_PROCESSOR STREQUAL "riscv32")
+	add_subdirectory(CH32V2xxSDK)
+	add_subdirectory(App/GPIO_Toggle_riscv)
+
+else()
+	add_subdirectory(CH32F2xxSDK)
+	add_subdirectory(App/GPIO_Toggle)
+
+endif()
 
 
 option(USB_CONSOLE "build for USB console, otherwise UART" OFF)
 option(BUILD_TYPE  "build Debug version" ON)
 
 
-
 if(BUILD_TYPE)
-	SET(CMAKE_BUILD_TYPE Debug)
+	SET(CMAKE_BUILD_TYPE ${BUILD_TYPE})
 endif()
 
 
-
-# import some lib
-# include(lib/cmake_libs.cmake)
-
-add_subdirectory(CH32F2xxSDK)
-add_subdirectory(App)
-# add_subdirectory(EXAM)
-
-
-# add_executable(${APP_NAME} ${SRC_LIST})
-# add_map_output(${APP_NAME})
-# add_extra_outputs(${APP_NAME})
-
-# target_include_directories(${APP_NAME} PRIVATE 
-# 	App
-# )
-
-
-# # target_wrap_functions(${APP_NAME} printf)
-# # target_wrap_functions(${APP_NAME} vsprintf)
-# # target_link_options(${APP_NAME} PRIVATE "-Wl,--wrap=vsprintf2")
-# # add_c_compile_options()
-
-
-# target_link_libraries(${APP_NAME} "TOOLCHAIN_gcc_${TARGET_PROCESSOR}" WCH_Lib)
-
-# target_linker_file(${APP_NAME} ${CMAKE_CURRENT_LIST_DIR}/cmake/ld/chf2xx.ld)

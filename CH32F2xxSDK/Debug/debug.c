@@ -114,7 +114,7 @@ void Delay_Ms(u16 n)
 // }
 
  
-__attribute__((weak)) int _read(int file, char *ptr, int len)
+int read(int file, char *ptr, int len)
 {
     (void)file;
     int DataIdx;
